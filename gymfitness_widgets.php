@@ -38,7 +38,35 @@ class GymFitness_Classes_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
+		?>
+		<ul class="sidebar-classes-list">
+			<?php
+				$args = array(
+					'post_type' => 'gymfitness_classes',
+					'posts_per_page' => 3
+				);
 
+				$classes = new WP_Query($args);
+				while($classes->have_posts()): $classes->the_post();
+			?>
+				<li class="sidebar_class">
+					<div class="sidebar-widget-image">
+						<?php the_post_thumbnail('thumbnail'); ?>
+
+					</div>
+					<div class="class-sidebar-content">
+						<a href="<?php the_permalink(); ?>">
+							<h3><?php the_title(); ?></h3>
+						</a>
+					</div>
+					
+				
+				</li>
+
+			<?php endwhile; wp_reset_postdata(); ?>
+		</ul>
+
+		<?php
 		echo $args['after_widget'];
 	}
 
