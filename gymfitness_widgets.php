@@ -38,14 +38,17 @@ class GymFitness_Classes_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
+		$quantity = $instance['quantity'];
+
 		?>
-		<h2 class="text-primary text-center classes-header">Our Classes</h2>
+		<h2 class="text-primary text-center classes-header"><?php echo esc_html($instance['title'] ); ?></h2>
 
 		<ul class="sidebar-classes-list">
 			<?php
 				$args = array(
 					'post_type' => 'gymfitness_classes',
-					'posts_per_page' => 3
+					'posts_per_page' => $quantity,
+					'orderby' => 'rand'
 				);
 
 				$classes = new WP_Query($args);
@@ -85,10 +88,10 @@ class GymFitness_Classes_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['quantity'] ) ? $instance['quantity'] : esc_html__( '1', 'text_domain' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'New title', 'text_domain' );
 		
 
-		$quantity = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'New title', 'text_domain' );
+		$quantity = ! empty( $instance['quantity'] ) ? $instance['quantity'] : esc_html__( '1', 'text_domain' );
 		?>
 		<p>
 		<label 
